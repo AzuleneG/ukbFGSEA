@@ -1,0 +1,27 @@
+Package: ukbFGSEA
+Title: Fast Preranked Gene Set Enrichment Analysis for UK Biobank Genebass Data
+Version: 0.2
+Authors@R: c(
+    person("Pengjun", "Guo", , "pengjun.guo@outlook.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0007-2717-0519")),
+    person("He", "Zhu", , "hedyzhu615@gmail.com", role = c("aut"),
+           comment = c(ORCID = "0009-0001-8483-7910"))
+       )
+Description: This package provides tools for conducting fast pre-ranked gene set enrichment analysis (FGSEA) on the UK Biobank Genebass dataset using the adaptive multilevel splitting Monte Carlo method implemented in `fgsea`. It includes functions for mapping FGSEA results across multiple phenotypes and tidying the output for further analysis.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    dplyr,
+    fgsea,
+    magrittr,
+    rlang,
+    tibble,
+    purrr,
+    tidyr,
+    utils
+Depends: 
+    R (>= 2.10)
+LazyData: true
+LazyDataCompression: xz
