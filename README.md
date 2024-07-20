@@ -6,45 +6,62 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ukbFGSEA is to …
+## Overview
+
+The goal of ukbFGSEA is to apply gene set enrichment analysis, based on
+FGSEA package, to Genebass data released by Karczewski et al. The
+package is amed to help researchers to perform detailed evaluations of
+gene set enrichment across a wide range of phenotypes. The package
+mainly includes three functions:
+
+- `ukbfgsea()` applies `fgsea::fgseaMultilevel()` - an adaptive
+  multilevel splitting Monte Carlo approach, to a single phenotype in
+  the UK Biobank Genebass dataset for a specified input gene set.
+
+- `map_ukbfgsea()` applies `fgsea::fgseaMultilevel()` to multiple
+  phenotypes in the UK Biobank Genebass dataset for a specified input
+  gene set. This function is suitable for large-scale(or full) Genebass
+  dataset.
+
+- `tidy_map()` organizes the raw output of `map_ukbfgsea()` to a tibble
+  including distinct columns for each phenotype and each ranking method,
+  providing a clear and accessible summary of the FGSEA results.
 
 ## Installation
 
 You can install the development version of ukbFGSEA like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# install.packages("githubinstall")
+library(githubinstall)
+githubinstall(ukbFGSEA)
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This example shows how to use `map_ukbfgsea()` to apply FGSEA on
+Genebass data, using the test data attached in the package.
 
 ``` r
+library(tidyverse)
 library(ukbFGSEA)
-## basic example code
+
+genebass_test_data 
+
+genebass_test_data %>% 
+  count(trait_type, phenocode, description, description_more)
+
+# then apply ukbfgsea to three phenotypes for each of gene set
+set.seed(123)
+asd_output <- map_ukbfgsea(input_geneset = ASD185, multiple_phenotypes = genebass_test_data)
+
+asd_output_tidy <- tidy_map(asd_output)
+asd_output_tidy
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## Getting help
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+If you find problems, please report them with clear information on
+[GitHub](https://github.com/tidyverse/ukbFGSEA/issues). You can also
+contact the authors through email: `hedyzhu615@gmail.com` and
+`pengjun.guo@outlook.com`
