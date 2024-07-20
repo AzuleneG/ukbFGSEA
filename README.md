@@ -34,7 +34,7 @@ You can install the development version of ukbFGSEA like so:
 ``` r
 # install.packages("devtools")
 library(devtools)
-install_github("ukbFGSEA")
+install_github("AzuleneG/ukbFGSEA")
 ```
 
 ## Example
