@@ -37,6 +37,17 @@ library(devtools)
 install_github("AzuleneG/ukbFGSEA")
 ```
 
+`genebass_test_data` is a test data originated from `results.mt` provided on the Genebass website. The package implements it as a test data set for testing the functions. We includes the documentation of this dataset, but because this test data is very large (220.6MB), the file is only provided in the releases of repo `AzuleneG/ukbFGSEA`. You can install the data like so:
+
+```r
+# install.packages("piggyback")
+library(piggyback)
+piggyback::pb_download("genebass_test_data.rda",
+	repo = "AzuleneG/ukbFGSEA",
+	dest = tempdir())
+load(paste0(tempdir(), "/genebass_test_data.rda"))
+```
+
 ## Example
 
 This example shows how to use `map_ukbfgsea()` to apply FGSEA on
