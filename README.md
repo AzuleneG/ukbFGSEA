@@ -32,9 +32,9 @@ mainly includes three functions:
 You can install the development version of ukbFGSEA like so:
 
 ``` r
-# install.packages("githubinstall")
-library(githubinstall)
-githubinstall("ukbFGSEA")
+# install.packages("devtools")
+library(devtools)
+install_github("ukbFGSEA")
 ```
 
 ## Example
