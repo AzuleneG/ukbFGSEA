@@ -1,7 +1,4 @@
 ---
-title: "The ukbFGSEA README"
-author: "He Zhu, Pengjun Guo"
-date: "2024-08-08"
 output: github_document
 editor_options: 
   chunk_output_type: console
