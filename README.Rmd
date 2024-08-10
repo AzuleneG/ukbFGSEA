@@ -2,7 +2,7 @@
 title: "The ukbFGSEA README"
 author: "He Zhu, Pengjun Guo"
 date: "2024-08-08"
-output: html_document
+output: github_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -200,20 +200,9 @@ significant_with_dd <- extract_significant_phenotypes(dd_all_output_tidy)
 # extract phenotypes significantly enriched with NDD genes
 significant_with_ndd <- extract_significant_phenotypes(ndd_all_output_tidy)
 
-significant_with_asd %>% 
-  kableExtra::kable(caption = paste0(nrow(.), " phenotypes significantly enriched with ASD genes")) %>% 
-  kableExtra::kable_styling(bootstrap_options = c("s","b","h","c","r")) %>% 
-  kableExtra::scroll_box(width = "100%", height = "600px") 
-
-significant_with_dd %>% 
-  kableExtra::kable(caption = paste0(nrow(.), " phenotypes significantly enriched with DD genes")) %>% 
-  kableExtra::kable_styling(bootstrap_options = c("s","b","h","c","r")) %>% 
-  kableExtra::scroll_box(width = "100%", height = "600px") 
-
-significant_with_ndd %>% 
-  kableExtra::kable(caption = paste0(nrow(.), " phenotypes significantly enriched with NDD genes")) %>% 
-  kableExtra::kable_styling(bootstrap_options = c("s","b","h","c","r")) %>% 
-  kableExtra::scroll_box(width = "100%", height = "600px") 
+significant_with_asd
+significant_with_dd
+significant_with_ndd
 
 
 # An example to visualize phenotypes significantly enriched with ASD
