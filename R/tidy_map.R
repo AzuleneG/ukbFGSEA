@@ -16,7 +16,7 @@
 #' @importFrom dplyr select
 #' @importFrom utils data
 #' @name tidy_map
-utils::globalVariables(names = c(".", "beta_pathway", "sign_pathway"), package = "ukbFGSEA",add = F)
+utils::globalVariables(names = c(".", "beta_pathway", "sign_pathway"), package = "ukbFGSEA", add = F)
 
 tidy_map <- function(input) {
   beta <- purrr::map_dfr(input$output, ~ .x$beta_results %>% as_tibble) %>%

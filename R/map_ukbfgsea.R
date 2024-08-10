@@ -15,8 +15,7 @@
 #'   asd_output <- map_ukbfgsea(input_geneset = ASD185, multiple_phenotypes = genebass_test_data)
 #' }
 #' @name map_ukbfgsea
-
-utils::globalVariables(names = c("Pvalue", "n_cases", "category", "annotation", "data"), package = "ukbFGSEA",add = F)
+utils::globalVariables(names = c("Pvalue", "n_cases", "category", "annotation", "data"), package = "ukbFGSEA", add = F)
 
 map_ukbfgsea <- function(input_geneset, multiple_phenotypes, ...) {
   multiple_phenotypes <- multiple_phenotypes %>%
