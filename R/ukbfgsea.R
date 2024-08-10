@@ -69,7 +69,7 @@ ukbfgsea <- function(input_geneset, ukb_genebass, plot = FALSE, ...) {
       sign_plot = plot_sign
     )
 
-  }else{
+  } else{
     output <- list(
       beta_results = fgsea_beta_result,
       beta_stats = ukb_genebass_beta,
