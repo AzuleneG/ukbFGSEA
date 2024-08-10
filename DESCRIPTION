@@ -25,3 +25,5 @@ Depends:
     R (>= 2.10)
 LazyData: true
 LazyDataCompression: xz
+URL: https://github.com/AzuleneG/ukbFGSEA
+BugReports: https://github.com/AzuleneG/ukbFGSEA/issues
