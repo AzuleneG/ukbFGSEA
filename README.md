@@ -4,6 +4,8 @@
 # ukbFGSEA
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -53,8 +55,8 @@ install_github("ropensci/piggyback")
 library(piggyback)
 
 piggyback::pb_download("genebass_test_data.rda",
-    repo = "AzuleneG/ukbFGSEA",
-    dest = tempdir())
+  repo = "AzuleneG/ukbFGSEA",
+  dest = tempdir())
 load(paste0(tempdir(), "/genebass_test_data.rda"))
 ```
 
@@ -120,8 +122,8 @@ library(piggyback) #Only for test data
 # Download and load test data
 
 pb_download("genebass_test_data.rda",
-    repo = "AzuleneG/ukbFGSEA",
-    dest = tempdir())
+  repo = "AzuleneG/ukbFGSEA",
+  dest = tempdir())
 load(paste0(tempdir(), "/genebass_test_data.rda"))
 
 # Display the structure of the test data
