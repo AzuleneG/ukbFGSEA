@@ -4,8 +4,6 @@
 # ukbFGSEA
 
 <!-- badges: start -->
-
-[![R-CMD-check](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -106,6 +104,16 @@ data, including all phenotypes from Genebass and apply ukbFGSEA to them.
 ``` r
 # First, load the libraries, Genebass Test Data, ASD Gene Set, DD Gene Set and NDD Gene Set
 library(tidyverse)
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.1.4     ✔ readr     2.1.5
+#> ✔ forcats   1.0.0     ✔ stringr   1.5.1
+#> ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+#> ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+#> ✔ purrr     1.0.2     
+#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 library(ukbFGSEA)
 library(piggyback) #Only for test data
 
@@ -123,114 +131,176 @@ genebass_test_data %>%
         phenocode,
         description,
         description_more)
-```
+#> # A tibble: 12 × 6
+#>    annotation       trait_type  phenocode description     description_more     n
+#>    <chr>            <chr>           <dbl> <chr>           <chr>            <int>
+#>  1 missense|LC      categorical      6150 Vascular/heart… "ACE touchscree… 19052
+#>  2 missense|LC      continuous      22200 Year of birth   "Year of birth … 19389
+#>  3 missense|LC      continuous      30760 HDL cholesterol "Measured by en… 19304
+#>  4 pLoF             categorical      6150 Vascular/heart… "ACE touchscree… 18027
+#>  5 pLoF             continuous      22200 Year of birth   "Year of birth … 17579
+#>  6 pLoF             continuous      30760 HDL cholesterol "Measured by en… 18220
+#>  7 pLoF|missense|LC categorical      6150 Vascular/heart… "ACE touchscree… 18281
+#>  8 pLoF|missense|LC continuous      22200 Year of birth   "Year of birth … 18611
+#>  9 pLoF|missense|LC continuous      30760 HDL cholesterol "Measured by en… 18530
+#> 10 synonymous       categorical      6150 Vascular/heart… "ACE touchscree… 19023
+#> 11 synonymous       continuous      22200 Year of birth   "Year of birth … 19342
+#> 12 synonymous       continuous      30760 HDL cholesterol "Measured by en… 19272
 
-    ## # A tibble: 12 × 6
-    ##    annotation       trait_type  phenocode description     description_more     n
-    ##    <chr>            <chr>           <dbl> <chr>           <chr>            <int>
-    ##  1 missense|LC      categorical      6150 Vascular/heart… "ACE touchscree… 19052
-    ##  2 missense|LC      continuous      22200 Year of birth   "Year of birth … 19389
-    ##  3 missense|LC      continuous      30760 HDL cholesterol "Measured by en… 19304
-    ##  4 pLoF             categorical      6150 Vascular/heart… "ACE touchscree… 18027
-    ##  5 pLoF             continuous      22200 Year of birth   "Year of birth … 17579
-    ##  6 pLoF             continuous      30760 HDL cholesterol "Measured by en… 18220
-    ##  7 pLoF|missense|LC categorical      6150 Vascular/heart… "ACE touchscree… 18281
-    ##  8 pLoF|missense|LC continuous      22200 Year of birth   "Year of birth … 18611
-    ##  9 pLoF|missense|LC continuous      30760 HDL cholesterol "Measured by en… 18530
-    ## 10 synonymous       categorical      6150 Vascular/heart… "ACE touchscree… 19023
-    ## 11 synonymous       continuous      22200 Year of birth   "Year of birth … 19342
-    ## 12 synonymous       continuous      30760 HDL cholesterol "Measured by en… 19272
-
-``` r
 # Apply ukbfgsea to three phenotypes for each gene set
 set.seed(123)
 asd_test_output <- map_ukbfgsea(input_geneset = ASD185, multiple_phenotypes = genebass_test_data)
+#> Warning: There were 24 warnings in `dplyr::mutate()`.
+#> The first warning was:
+#> ℹ In argument: `output = purrr::map(data, ~ukbfgsea(input_geneset =
+#>   input_geneset, ukb_genebass = .x))`.
+#> ℹ In group 1: `n_cases = 9308`, `n_controls = 384687`, `heritability =
+#>   0.060414`, `saige_version = "SAIGE_0.44.5"`, `inv_normalized = FALSE`,
+#>   `trait_type = "categorical"`, `phenocode = 6150`, `pheno_sex = "both_sexes"`,
+#>   `coding = 1`, `modifier = NA`, `n_cases_defined = 11263`, `n_cases_both_sexes
+#>   = 11608`, `n_cases_females = 2217`, `n_cases_males = 9046`, `description =
+#>   "Vascular/heart problems diagnosed by doctor"`, `description_more = "ACE
+#>   touchscreen question \"Has a doctor ever told you that you have had any of
+#>   the following conditions? (You can select more than one answer)\" The
+#>   following checks were performed: If code -7 was selected, then no additional
+#>   choices were allowed.  If code -3 was selected, then no additional choices
+#>   were allowed.  If the participant activated the Help button they were shown
+#>   the message: If you do not know if you have had any of the listed conditions,
+#>   enter None of the above. You can check this with an interviewer later in the
+#>   visit."`, `coding_description = "Heart attack"`, `category = "UK Biobank
+#>   Assessment Centre > Touchscreen > Health and medical history > Medical
+#>   conditions"`, `annotation = "missense|LC"`.
+#> Caused by warning in `preparePathwaysAndStats()`:
+#> ! There are ties in the preranked stats (0.22% of the list).
+#> The order of those tied genes will be arbitrary, which may produce unexpected results.
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 23 remaining warnings.
 asd_test_output_tidy <- tidy_map(asd_test_output)
 asd_test_output_tidy
-```
+#> # A tibble: 12 × 33
+#>    annotation       n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
+#> # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
+#> #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
+#> #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
 
-    ## # A tibble: 12 × 33
-    ##    annotation       n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
-    ## #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
-    ## #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
-
-``` r
 set.seed(123)
 dd_test_output <- map_ukbfgsea(input_geneset = DD477, multiple_phenotypes = genebass_test_data)
+#> Warning: There were 24 warnings in `dplyr::mutate()`.
+#> The first warning was:
+#> ℹ In argument: `output = purrr::map(data, ~ukbfgsea(input_geneset =
+#>   input_geneset, ukb_genebass = .x))`.
+#> ℹ In group 1: `n_cases = 9308`, `n_controls = 384687`, `heritability =
+#>   0.060414`, `saige_version = "SAIGE_0.44.5"`, `inv_normalized = FALSE`,
+#>   `trait_type = "categorical"`, `phenocode = 6150`, `pheno_sex = "both_sexes"`,
+#>   `coding = 1`, `modifier = NA`, `n_cases_defined = 11263`, `n_cases_both_sexes
+#>   = 11608`, `n_cases_females = 2217`, `n_cases_males = 9046`, `description =
+#>   "Vascular/heart problems diagnosed by doctor"`, `description_more = "ACE
+#>   touchscreen question \"Has a doctor ever told you that you have had any of
+#>   the following conditions? (You can select more than one answer)\" The
+#>   following checks were performed: If code -7 was selected, then no additional
+#>   choices were allowed.  If code -3 was selected, then no additional choices
+#>   were allowed.  If the participant activated the Help button they were shown
+#>   the message: If you do not know if you have had any of the listed conditions,
+#>   enter None of the above. You can check this with an interviewer later in the
+#>   visit."`, `coding_description = "Heart attack"`, `category = "UK Biobank
+#>   Assessment Centre > Touchscreen > Health and medical history > Medical
+#>   conditions"`, `annotation = "missense|LC"`.
+#> Caused by warning in `preparePathwaysAndStats()`:
+#> ! There are ties in the preranked stats (0.22% of the list).
+#> The order of those tied genes will be arbitrary, which may produce unexpected results.
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 23 remaining warnings.
 dd_test_output_tidy <- tidy_map(dd_test_output)
 dd_test_output_tidy
-```
+#> # A tibble: 12 × 33
+#>    annotation       n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
+#> # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
+#> #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
+#> #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
 
-    ## # A tibble: 12 × 33
-    ##    annotation       n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
-    ## #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
-    ## #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
-
-``` r
 set.seed(123)
 ndd_test_output <- map_ukbfgsea(input_geneset = NDD664, multiple_phenotypes = genebass_test_data)
+#> Warning: There were 24 warnings in `dplyr::mutate()`.
+#> The first warning was:
+#> ℹ In argument: `output = purrr::map(data, ~ukbfgsea(input_geneset =
+#>   input_geneset, ukb_genebass = .x))`.
+#> ℹ In group 1: `n_cases = 9308`, `n_controls = 384687`, `heritability =
+#>   0.060414`, `saige_version = "SAIGE_0.44.5"`, `inv_normalized = FALSE`,
+#>   `trait_type = "categorical"`, `phenocode = 6150`, `pheno_sex = "both_sexes"`,
+#>   `coding = 1`, `modifier = NA`, `n_cases_defined = 11263`, `n_cases_both_sexes
+#>   = 11608`, `n_cases_females = 2217`, `n_cases_males = 9046`, `description =
+#>   "Vascular/heart problems diagnosed by doctor"`, `description_more = "ACE
+#>   touchscreen question \"Has a doctor ever told you that you have had any of
+#>   the following conditions? (You can select more than one answer)\" The
+#>   following checks were performed: If code -7 was selected, then no additional
+#>   choices were allowed.  If code -3 was selected, then no additional choices
+#>   were allowed.  If the participant activated the Help button they were shown
+#>   the message: If you do not know if you have had any of the listed conditions,
+#>   enter None of the above. You can check this with an interviewer later in the
+#>   visit."`, `coding_description = "Heart attack"`, `category = "UK Biobank
+#>   Assessment Centre > Touchscreen > Health and medical history > Medical
+#>   conditions"`, `annotation = "missense|LC"`.
+#> Caused by warning in `preparePathwaysAndStats()`:
+#> ! There are ties in the preranked stats (0.22% of the list).
+#> The order of those tied genes will be arbitrary, which may produce unexpected results.
+#> ℹ Run `dplyr::last_dplyr_warnings()` to see the 23 remaining warnings.
 ndd_test_output_tidy <- tidy_map(ndd_test_output)
 ndd_test_output_tidy
+#> # A tibble: 12 × 33
+#>    annotation       n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
+#>  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
+#>  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
+#> 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
+#> # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
+#> #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
+#> #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
 ```
-
-    ## # A tibble: 12 × 33
-    ##    annotation       n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>              <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 missense|LC         9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF                9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  3 synonymous          9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF|missense|LC    9308     384687       0.0604 SAIGE_0.44.5  FALSE         
-    ##  5 missense|LC        99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  6 pLoF               99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  7 synonymous         99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  8 pLoF|missense|LC   99877         NA       0      SAIGE_0.44.5  FALSE         
-    ##  9 missense|LC       344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 10 pLoF              344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 11 synonymous        344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## 12 pLoF|missense|LC  344938         NA       0      SAIGE_0.44.5  FALSE         
-    ## # ℹ 27 more variables: trait_type <chr>, phenocode <dbl>, pheno_sex <chr>,
-    ## #   coding <dbl>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>,
-    ## #   sign_pval <dbl>, sign_padj <dbl>, sign_log2err <dbl>, sign_ES <dbl>, …
 
 #### Example 2: Applying ukbFGSEA on Genebass Data Including All Phenotypes
 
@@ -316,100 +386,81 @@ extract_significant_phenotypes <- function(data) {
 
 # extract phenotypes significantly enriched with ASD genes
 significant_with_asd <- extract_significant_phenotypes(asd_all_output_tidy)
-```
+#> [1] "Correlation between beta_pval and sign_pval: 0.698660507602923"
 
-    ## [1] "Correlation between beta_pval and sign_pval: 0.698660507602923"
-
-``` r
 # extract phenotypes significantly enriched with DD genes
 significant_with_dd <- extract_significant_phenotypes(dd_all_output_tidy)
-```
+#> [1] "Correlation between beta_pval and sign_pval: 0.752985623493337"
 
-    ## [1] "Correlation between beta_pval and sign_pval: 0.752985623493337"
-
-``` r
 # extract phenotypes significantly enriched with NDD genes
 significant_with_ndd <- extract_significant_phenotypes(ndd_all_output_tidy)
-```
+#> [1] "Correlation between beta_pval and sign_pval: 0.737126031432676"
 
-    ## [1] "Correlation between beta_pval and sign_pval: 0.737126031432676"
-
-``` r
 significant_with_asd
-```
-
-    ## # A tibble: 36 × 34
-    ##    annotation n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
-    ##  3 pLoF          3105     391678       0.0300 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF          3851     390932       0.140  SAIGE_0.44.5  FALSE         
-    ##  5 pLoF          3036     391747       0.0338 SAIGE_0.44.5  FALSE         
-    ##  6 pLoF          3590     391193       0.0197 SAIGE_0.44.5  FALSE         
-    ##  7 pLoF          9257     385526       0.0303 SAIGE_0.44.5  FALSE         
-    ##  8 pLoF          4912     389871       0.0392 SAIGE_0.44.5  FALSE         
-    ##  9 pLoF          4801     389982       0.0193 SAIGE_0.44.5  FALSE         
-    ## 10 pLoF          3381     391402       0.0176 SAIGE_0.44.5  FALSE         
-    ## # ℹ 26 more rows
-    ## # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
-    ## #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
-
-``` r
+#> # A tibble: 36 × 34
+#>    annotation n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
+#>  2 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
+#>  3 pLoF          3105     391678       0.0300 SAIGE_0.44.5  FALSE         
+#>  4 pLoF          3851     390932       0.140  SAIGE_0.44.5  FALSE         
+#>  5 pLoF          3036     391747       0.0338 SAIGE_0.44.5  FALSE         
+#>  6 pLoF          3590     391193       0.0197 SAIGE_0.44.5  FALSE         
+#>  7 pLoF          9257     385526       0.0303 SAIGE_0.44.5  FALSE         
+#>  8 pLoF          4912     389871       0.0392 SAIGE_0.44.5  FALSE         
+#>  9 pLoF          4801     389982       0.0193 SAIGE_0.44.5  FALSE         
+#> 10 pLoF          3381     391402       0.0176 SAIGE_0.44.5  FALSE         
+#> # ℹ 26 more rows
+#> # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
+#> #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
 significant_with_dd
-```
-
-    ## # A tibble: 116 × 34
-    ##    annotation n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF          5232     389551       0.0234 SAIGE_0.44.5  FALSE         
-    ##  3 pLoF          3045     391738       0.0757 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF         15514     379269       0.0646 SAIGE_0.44.5  FALSE         
-    ##  5 pLoF          3019     391764       0.134  SAIGE_0.44.5  FALSE         
-    ##  6 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
-    ##  7 pLoF          4063     390720       0.0746 SAIGE_0.44.5  FALSE         
-    ##  8 pLoF          5494     389289       0.0199 SAIGE_0.44.5  FALSE         
-    ##  9 pLoF         22602     372181       0.0131 SAIGE_0.44.5  FALSE         
-    ## 10 pLoF          5473     389310       0.0147 SAIGE_0.44.5  FALSE         
-    ## # ℹ 106 more rows
-    ## # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
-    ## #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
-
-``` r
+#> # A tibble: 116 × 34
+#>    annotation n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
+#>  2 pLoF          5232     389551       0.0234 SAIGE_0.44.5  FALSE         
+#>  3 pLoF          3045     391738       0.0757 SAIGE_0.44.5  FALSE         
+#>  4 pLoF         15514     379269       0.0646 SAIGE_0.44.5  FALSE         
+#>  5 pLoF          3019     391764       0.134  SAIGE_0.44.5  FALSE         
+#>  6 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
+#>  7 pLoF          4063     390720       0.0746 SAIGE_0.44.5  FALSE         
+#>  8 pLoF          5494     389289       0.0199 SAIGE_0.44.5  FALSE         
+#>  9 pLoF         22602     372181       0.0131 SAIGE_0.44.5  FALSE         
+#> 10 pLoF          5473     389310       0.0147 SAIGE_0.44.5  FALSE         
+#> # ℹ 106 more rows
+#> # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
+#> #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
 significant_with_ndd
-```
+#> # A tibble: 164 × 34
+#>    annotation n_cases n_controls heritability saige_version inv_normalized
+#>    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
+#>  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
+#>  2 pLoF          5232     389551       0.0234 SAIGE_0.44.5  FALSE         
+#>  3 pLoF          3265     391518       0.0331 SAIGE_0.44.5  FALSE         
+#>  4 pLoF          7887     386896       0.0206 SAIGE_0.44.5  FALSE         
+#>  5 pLoF          5472     389311       0.0218 SAIGE_0.44.5  FALSE         
+#>  6 pLoF          3122     391661       0.0124 SAIGE_0.44.5  FALSE         
+#>  7 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
+#>  8 pLoF          4063     390720       0.0746 SAIGE_0.44.5  FALSE         
+#>  9 pLoF          5494     389289       0.0199 SAIGE_0.44.5  FALSE         
+#> 10 pLoF         22602     372181       0.0131 SAIGE_0.44.5  FALSE         
+#> # ℹ 154 more rows
+#> # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
+#> #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
+#> #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
+#> #   description <chr>, description_more <chr>, coding_description <chr>,
+#> #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
+#> #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
 
-    ## # A tibble: 164 × 34
-    ##    annotation n_cases n_controls heritability saige_version inv_normalized
-    ##    <chr>        <dbl>      <dbl>        <dbl> <chr>         <lgl>         
-    ##  1 pLoF          9234     385549       0.0595 SAIGE_0.44.5  FALSE         
-    ##  2 pLoF          5232     389551       0.0234 SAIGE_0.44.5  FALSE         
-    ##  3 pLoF          3265     391518       0.0331 SAIGE_0.44.5  FALSE         
-    ##  4 pLoF          7887     386896       0.0206 SAIGE_0.44.5  FALSE         
-    ##  5 pLoF          5472     389311       0.0218 SAIGE_0.44.5  FALSE         
-    ##  6 pLoF          3122     391661       0.0124 SAIGE_0.44.5  FALSE         
-    ##  7 pLoF          3255     391528       0.0213 SAIGE_0.44.5  FALSE         
-    ##  8 pLoF          4063     390720       0.0746 SAIGE_0.44.5  FALSE         
-    ##  9 pLoF          5494     389289       0.0199 SAIGE_0.44.5  FALSE         
-    ## 10 pLoF         22602     372181       0.0131 SAIGE_0.44.5  FALSE         
-    ## # ℹ 154 more rows
-    ## # ℹ 28 more variables: trait_type <chr>, phenocode <chr>, pheno_sex <chr>,
-    ## #   coding <chr>, modifier <chr>, n_cases_defined <dbl>,
-    ## #   n_cases_both_sexes <dbl>, n_cases_females <dbl>, n_cases_males <dbl>,
-    ## #   description <chr>, description_more <chr>, coding_description <chr>,
-    ## #   category <chr>, beta_pval <dbl>, beta_padj <dbl>, beta_log2err <dbl>,
-    ## #   beta_ES <dbl>, beta_NES <dbl>, beta_size <int>, beta_leadingEdge <list>, …
 
-``` r
 # An example to visualize phenotypes significantly enriched with ASD
 significant_with_asd %>% 
   ggplot(aes(description_full, -log10(beta_pval)))+
@@ -420,7 +471,7 @@ significant_with_asd %>%
   ylab("-log10(P value from Beta metric)")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 #### Biological Relevance
 

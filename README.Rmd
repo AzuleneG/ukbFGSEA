@@ -1,20 +1,21 @@
 ---
 output: github_document
-editor_options: 
-  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
 ```
 
 # ukbFGSEA
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/AzuleneG/ukbFGSEA/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/AzuleneG/ukbFGSEA/branch/v1.0.0/graph/badge.svg)](https://app.codecov.io/gh/AzuleneG/ukbFGSEA?branch=v1.0.0)
 <!-- badges: end -->
 
 ## Overview
@@ -48,8 +49,8 @@ install_github("ropensci/piggyback")
 library(piggyback)
 
 piggyback::pb_download("genebass_test_data.rda",
-	repo = "AzuleneG/ukbFGSEA",
-	dest = tempdir())
+  repo = "AzuleneG/ukbFGSEA",
+  dest = tempdir())
 load(paste0(tempdir(), "/genebass_test_data.rda"))
 ```
 
@@ -96,8 +97,8 @@ library(piggyback) #Only for test data
 # Download and load test data
 
 pb_download("genebass_test_data.rda",
-	repo = "AzuleneG/ukbFGSEA",
-	dest = tempdir())
+  repo = "AzuleneG/ukbFGSEA",
+  dest = tempdir())
 load(paste0(tempdir(), "/genebass_test_data.rda"))
 
 # Display the structure of the test data
@@ -224,9 +225,9 @@ We discuss the phenotypes significantly enriched with ASD genes as example here.
 2. **Implications for Treatment and Management:** Understanding these genetic linkages can inform more comprehensive healthcare strategies for individuals with ASD. For instance, the link between ASD genes and metabolic conditions like diabetes (insulin product usage) can lead to integrated care approaches that address both neurodevelopmental and metabolic health.
 
 3. **Behavioral and Lifestyle Factors:** The significant enrichment in alcohol consumption categories provides insights into the behavioral patterns associated with ASD. These patterns may be influenced by the genetic makeup of individuals and can have implications for lifestyle interventions and support mechanisms.
-	
+  
 4. **Medical Interventions and Surgical Needs:** The variety of surgeries and medical procedures associated with enriched ASD genes indicate that individuals with ASD might have higher healthcare needs, particularly related to musculoskeletal and chronic conditions. This highlights the importance of specialized medical care and preventive strategies in this population.
-	
+  
 5. **Potential for Further Research:** These findings open avenues for further research into the specific genetic mechanisms underlying these associations. Investigating the pathways and genes involved could lead to better diagnostic tools and targeted therapies for both ASD and its comorbid conditions.
 
 In conclusion, the significant enrichment of ASD genes across diverse phenotypes in the UK Biobank underscores the broad impact of these genetic factors on health and disease. This analysis not only enhances our understanding of ASD but also informs holistic approaches to healthcare and research for individuals with ASD-related genetic profiles. Future studies should aim to unravel the specific genetic and molecular mechanisms driving these associations to develop more effective interventions and support systems.
